@@ -65,8 +65,18 @@ public class DrawingView extends View {
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
         canvasPaint = new Paint(Paint.DITHER_FLAG);
         //setupDots();
-        //limits = new DrawingLimits(1);
-        limits = new DrawingLimits();
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                limits = new DrawingLimits(1);
+            }
+        }).start();*/
+        try {
+            limits = new DrawingLimits(1);
+        }
+        catch(Exception e) {
+            limits = new DrawingLimits();
+        }
     }
 
 

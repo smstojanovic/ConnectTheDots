@@ -5,7 +5,7 @@ import android.graphics.Paint;
 
 import java.util.ArrayList;
 
-//import drawsandbox.com.drawingsandbox.DataRetrieve.LevelBuilder;
+import connectthedots.com.connectthedots.DataRetrieve.LevelBuilder;
 
 /**
  * Created by Stevan on 2/14/2016.
@@ -33,7 +33,14 @@ public class DrawingLimits {
     }
 
     public DrawingLimits(int levelNumber){
-        //setupDots(levelNumber);
+        setupDots(levelNumber);
+        screenHeight = 2310;
+        screenWidth = 1270;
+        activeDotID = -1;
+    }
+
+    public DrawingLimits(int levelNumber, boolean isTest){
+        setupDots(levelNumber, isTest);
         screenHeight = 2310;
         screenWidth = 1270;
         activeDotID = -1;
@@ -47,7 +54,7 @@ public class DrawingLimits {
     }
 
     public DrawingLimits(int levelNumber, double width, double height){
-        //setupDots(levelNumber);
+        setupDots(levelNumber);
         screenHeight = height;
         screenWidth = width;
         activeDotID = -1;
@@ -147,18 +154,33 @@ public class DrawingLimits {
         }
 
     }
-/*
     private void setupDots(int subCategory_ID){
         try {
-            LevelBuilder builder = new LevelBuilder();
-            dots = builder.buildLevel(subCategory_ID);
+            dots = new LevelBuilder().execute(subCategory_ID).get();
+            //dots = builder.buildLevel(subCategory_ID);
 
         }
         catch(Exception e) {
             System.out.print(e.toString());
         }
 
-    }*/
+    }
+
+    private void setupDots(int subCategory_ID, boolean runTest){
+        try {
+            if (runTest) {
+                LevelBuilder build = new LevelBuilder();
+                dots = build.buildLevel(subCategory_ID);
+            }
+            else
+                setupDots(subCategory_ID);
+
+        }
+        catch(Exception e) {
+            System.out.print(e.toString());
+        }
+
+    }
 
     public void redrawDots(double w, double h, Canvas drawCanvas, Paint canvasPaint){
         canvasPaint.setTextSize(75);
