@@ -40,7 +40,7 @@
                     android:onClick="categoryClicked"
                     android:src="@drawable/shapes_line"
                     android:scaleType="centerInside"
-                    android:tag="#FF660000">
+                    android:tag="#FF660001">
                 </ImageButton>
 
 

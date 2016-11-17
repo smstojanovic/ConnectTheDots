@@ -1,5 +1,6 @@
 package connectthedots.com.connectthedots.DataRetrieve;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 
 import java.sql.Driver;
@@ -21,7 +22,7 @@ public class LevelBuilder extends AsyncTask<Integer,Void,ArrayList<Dot>> {
 
     public LevelBuilder(){
         connectionString = "jdbc:jtds:sqlserver://geodesic.database.windows.net:1433/SS_DEV;user=drawingSandbox@geodesic;password=P1u7on1cX;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=5;";
-        //buildLevel(1);
+        buildLevel(1);
     }
     // IPs allowed: 101.173.64.0 to 101.173.64.255
     @Override
@@ -36,7 +37,7 @@ public class LevelBuilder extends AsyncTask<Integer,Void,ArrayList<Dot>> {
             Connection conn = d.connect(connectionString, new Properties());
             System.out.println("test");
             Statement sta = conn.createStatement();
-            String Sql = "SELECT [Dot_ID],[ComponentID],[Sub_Category_ID],[Next_Dot_ID],[X_Coord],[Y_Coord],[Size_override],[label],[colour_override] FROM SS_DEV.[dbo].[dots] WHERE Sub_Category_ID = " + Integer.toString(sub_category_id) + " Order By dot_id DESC";
+            String Sql = "SELECT [Dot_ID],[ComponentID],[Sub_Category_ID],[Next_Dot_ID],[X_Coord],[Y_Coord],[Size_override],[label],[colour_override] FROM SS_DEV.[dbo].[dots] WHERE Sub_Category_ID = " + Integer.toString(sub_category_id) + " Order By dot_id ASC";
             ResultSet rs = sta.executeQuery(Sql);
 
             while (rs.next()) {
@@ -46,14 +47,14 @@ public class LevelBuilder extends AsyncTask<Integer,Void,ArrayList<Dot>> {
                 double X_Coord = Double.parseDouble(rs.getString("X_Coord"));
                 double Y_Coord = Double.parseDouble(rs.getString("Y_Coord"));
 
-                Dot newDot = new Dot(dotID,nextDotID, X_Coord, Y_Coord,50,0 );
+                Dot newDot = new Dot(dotID,nextDotID, X_Coord, Y_Coord,50, Color.BLACK );
 
                 dots.add(newDot);
 
-                for(Dot dot : dots){
-                    if (dot.dotID == newDot.nextDotID && newDot.nextDotID != newDot.dotID)
-                        newDot.setNextDot(dot);
-                }
+            }
+
+            for(Dot dot : dots){
+                dot.setNextDot(dots);
             }
 
 

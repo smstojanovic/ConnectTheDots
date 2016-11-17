@@ -2,6 +2,12 @@ package connectthedots.com.connectthedots.LevelClasses;
 
 
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
+import java.util.ArrayList;
+
 import connectthedots.com.connectthedots.R;
 
 /**
@@ -79,8 +85,33 @@ public class Dot {
             return null;
     }
 
+    public void drawDot(double w, double h, Canvas drawCanvas, Paint canvasPaint){
+        int tempColor = canvasPaint.getColor();
+        canvasPaint.setColor(color);
+        drawCanvas.drawCircle( (float) (w*x), (float) (h*y), size, canvasPaint );
+        drawCanvas.drawText(label, (float) (w*x - 1.5*size), (float) (h*y - 1.5*size), canvasPaint);
+        canvasPaint.setColor(tempColor);
+    }
+
+    public void setColor(int color){
+        this.color = color;
+    }
+
+    public void setColor(int color, boolean changeNextDotColor){
+        this.color = color;
+        if (changeNextDotColor)
+            nextDot.setColor(color);
+    }
+
     public void setNextDot(Dot d){
         nextDot = d;
+    }
+
+    public void setNextDot(ArrayList<Dot> dots){
+        for(Dot dot : dots){
+            if(dot.dotID == nextDotID && dotID != dot.dotID)
+                setNextDot(dot);
+        }
     }
 
     public Vector2 getNextDotNorm(double w, double h){

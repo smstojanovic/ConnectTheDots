@@ -34,6 +34,9 @@ public class DrawingView extends View {
     private Bitmap canvasBitmap;
     private float brushSize, lastBrushSize;
     private boolean erase=false;
+    // figure out which level to render
+    private String levelTag;
+
 
     // drawing specific points
     private boolean drawing = false;
@@ -71,17 +74,23 @@ public class DrawingView extends View {
                 limits = new DrawingLimits(1);
             }
         }).start();*/
-        try {
-            limits = new DrawingLimits(1);
-        }
-        catch(Exception e) {
-            limits = new DrawingLimits();
-        }
     }
 
 
     private void redrawDots(double w, double h){
         limits.redrawDots(w, h, drawCanvas, canvasPaint);
+    }
+
+    public void setLevelTag(String tag){
+        levelTag = tag;
+
+        try {
+            int levelNumber = 1;
+            limits = new DrawingLimits(levelNumber);
+        }
+        catch(Exception e) {
+            limits = new DrawingLimits();
+        }
     }
 
     @Override
@@ -157,6 +166,7 @@ public class DrawingView extends View {
 
 
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //detect user touch
@@ -165,7 +175,7 @@ public class DrawingView extends View {
         // currently locks into the two dots. Will need to change all of this to be dynamic in the future.
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if(limits.activateDot(touchX, touchY)) {
+                if(limits.activateDot(touchX, touchY, drawCanvas, drawPaint)) {
                     drawPath.moveTo(touchX, touchY);
                     drawing = true;
                     lastX = touchX;
@@ -192,7 +202,8 @@ public class DrawingView extends View {
             case MotionEvent.ACTION_UP:
                 if(drawing
                         && limits.isAtNextDot(touchX, touchY)//(Math.abs(touchX - 7*drawCanvas.getWidth()/8) < 40) && (Math.abs(touchY - drawCanvas.getHeight()/2) < 40)
-                        ) {
+                        )
+                {
                     drawCanvas.drawPath(drawPath, drawPaint);
                     drawPath.reset();
                     drawing = false;
@@ -201,6 +212,8 @@ public class DrawingView extends View {
                     drawPath.rewind();
                     drawPath.reset();
                 }
+
+                limits.resetColor(drawCanvas,drawPaint);
                 break;
             default:
                 return false;

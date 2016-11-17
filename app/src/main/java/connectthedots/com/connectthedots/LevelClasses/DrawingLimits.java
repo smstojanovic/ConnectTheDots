@@ -1,6 +1,7 @@
 package connectthedots.com.connectthedots.LevelClasses;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
@@ -82,6 +83,24 @@ public class DrawingLimits {
                 System.out.println(dot.x*screenWidth);
                 System.out.println(dot.y*screenHeight);
                 activeDotID = dot.dotID;
+                dot.setColor(Color.GREEN,true);
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    public boolean activateDot(double touchX, double touchY, Canvas drawCanvas, Paint drawPaint){
+
+        for(Dot dot : dots){
+            if(dot.distanceFrom(touchX, touchY, screenWidth, screenHeight) < dot.size + 5){
+                System.out.println(dot.x*screenWidth);
+                System.out.println(dot.y*screenHeight);
+                activeDotID = dot.dotID;
+                dot.setColor(Color.GREEN,true);
+                redrawDots(screenWidth, screenHeight, drawCanvas, drawPaint);
                 return true;
             }
 
@@ -92,14 +111,22 @@ public class DrawingLimits {
 
     public boolean isAtNextDot(double touchX, double touchY){
 
-        return dots.get(activeDotID).getNextDot().distanceFrom(touchX, touchY, screenWidth, screenHeight) < dots.get(activeDotID).getNextDot().size + 5;
+        return getDotByID(activeDotID).getNextDot().distanceFrom(touchX, touchY, screenWidth, screenHeight) < getDotByID(activeDotID).getNextDot().size + 5;
 
+    }
+
+    public Dot getDotByID(int dotID){
+        for(Dot dot : dots){
+            if(dot.dotID == dotID)
+                return dot;
+        }
+        return null;
     }
 
     public boolean isInLine(double touchX, double touchY){
         Vector2 touchVect = new Vector2(touchX, touchY);
-        Vector2 activeDotVect = dots.get(activeDotID).getPosVect().scale(screenWidth, screenHeight);
-        Vector2 normVect = dots.get(activeDotID).getNextDotNorm(screenWidth, screenHeight);
+        Vector2 activeDotVect = getDotByID(activeDotID).getPosVect().scale(screenWidth, screenHeight);
+        Vector2 normVect = getDotByID(activeDotID).getNextDotNorm(screenWidth, screenHeight);
 
         // next try and decipher whats going on.
         Vector2 vect = normVect.rotate(Math.PI / 2);
@@ -119,7 +146,7 @@ public class DrawingLimits {
     public boolean isGoingForward(double touchX, double touchY){
         Vector2 touchVect = new Vector2(touchX, touchY);
         Vector2 lastTouchVect = new Vector2(lastX, lastY);
-        Vector2 normVect = dots.get(activeDotID).getNextDotNorm(screenWidth, screenHeight);
+        Vector2 normVect = getDotByID(activeDotID).getNextDotNorm(screenWidth, screenHeight);
 
         Vector2 difference = touchVect.subtract(lastTouchVect);
 
@@ -130,7 +157,7 @@ public class DrawingLimits {
     public boolean isGoingForward(double touchX, double touchY, double lastTouchX, double lastTouchY){
         Vector2 touchVect = new Vector2(touchX, touchY);
         Vector2 lastTouchVect = new Vector2(lastTouchX, lastTouchY);
-        Vector2 normVect = dots.get(activeDotID).getNextDotNorm(screenWidth, screenHeight);
+        Vector2 normVect = getDotByID(activeDotID).getNextDotNorm(screenWidth, screenHeight);
 
         Vector2 difference = touchVect.subtract(lastTouchVect);
 
@@ -182,12 +209,20 @@ public class DrawingLimits {
 
     }
 
+    public void resetColor(Canvas drawCanvas, Paint canvasPaint){
+        for(Dot dot :  dots){
+            // TODO: set colour.
+            dot.setColor(Color.BLACK);
+        }
+        redrawDots(screenWidth,screenHeight,drawCanvas,canvasPaint);
+    }
+
     public void redrawDots(double w, double h, Canvas drawCanvas, Paint canvasPaint){
         canvasPaint.setTextSize(75);
         updateDimensions(w,h);
         for(Dot dot :  dots){
-            drawCanvas.drawCircle( (float) (w*dot.x), (float) (h*dot.y), dot.size, canvasPaint );
-            drawCanvas.drawText(dot.label, (float) (w*dot.x - 1.5*dot.size), (float) (h*dot.y - 1.5*dot.size), canvasPaint);
+            // TODO: set colour.
+            dot.drawDot(w,h,drawCanvas,canvasPaint);
         }
         System.out.println(w);
         System.out.println(h);

@@ -30,7 +30,8 @@ public class CategoryActivity extends AppCompatActivity {
     public void categoryClicked(View view){
         // set new content view when a category is clicked. This is called via an imagebutton object in the layout.
         Intent intent = new Intent(this, PaintActivity.class);
-        intent.putExtra("key", "hello");
+        String levelTag = view.getTag().toString();
+        intent.putExtra("key", levelTag);
         startActivity(intent);
     }
 

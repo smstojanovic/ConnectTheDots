@@ -18,7 +18,7 @@ public class PaintActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         Intent intent = getIntent();
-        String extra = intent.getStringExtra("key");
+        String tag = intent.getStringExtra("key");
 
 
         super.onCreate(savedInstanceState);
@@ -27,6 +27,7 @@ public class PaintActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawView = (DrawingView) findViewById(R.id.drawing);
+        drawView.setLevelTag(tag);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
