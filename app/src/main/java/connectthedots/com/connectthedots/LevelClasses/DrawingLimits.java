@@ -79,7 +79,7 @@ public class DrawingLimits {
     public boolean activateDot(double touchX, double touchY){
 
         for(Dot dot : dots){
-            if(dot.distanceFrom(touchX, touchY, screenWidth, screenHeight) < dot.size + 5){
+            if(dot.distanceFrom(touchX, touchY, screenWidth, screenHeight) < dot.size + 5 && dot.getEdgeActiveState() == false){
                 System.out.println(dot.x*screenWidth);
                 System.out.println(dot.y*screenHeight);
                 activeDotID = dot.dotID;
@@ -95,7 +95,7 @@ public class DrawingLimits {
     public boolean activateDot(double touchX, double touchY, Canvas drawCanvas, Paint drawPaint){
 
         for(Dot dot : dots){
-            if(dot.distanceFrom(touchX, touchY, screenWidth, screenHeight) < dot.size + 5){
+            if(dot.distanceFrom(touchX, touchY, screenWidth, screenHeight) < dot.size + 5 && dot.getEdgeActiveState() == false){
                 System.out.println(dot.x*screenWidth);
                 System.out.println(dot.y*screenHeight);
                 activeDotID = dot.dotID;
@@ -109,10 +109,31 @@ public class DrawingLimits {
         return false;
     }
 
+    public boolean isAllEdgesActive(){
+
+        for(Dot dot : dots){
+            if (dot.getEdgeActiveState() == false)
+                return false;
+        }
+
+        return true;
+    }
+
+    public void setDotsActiveColor(Canvas drawCanvas, Paint drawPaint){
+        for(Dot dot : dots){
+            dot.setColor(Color.GREEN, true);
+        }
+        redrawDots(screenWidth, screenHeight, drawCanvas, drawPaint);
+    }
+
     public boolean isAtNextDot(double touchX, double touchY){
 
         return getDotByID(activeDotID).getNextDot().distanceFrom(touchX, touchY, screenWidth, screenHeight) < getDotByID(activeDotID).getNextDot().size + 5;
 
+    }
+
+    public void setActiveDotActiveState(boolean activatorVariable){
+        getDotByID(activeDotID).setEdgeActive(activatorVariable);
     }
 
     public Dot getDotByID(int dotID){

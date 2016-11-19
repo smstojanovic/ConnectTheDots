@@ -37,6 +37,7 @@ public class DrawingView extends View {
     // figure out which level to render
     private String levelTag;
 
+    private boolean levelComplete = false;
 
     // drawing specific points
     private boolean drawing = false;
@@ -207,13 +208,19 @@ public class DrawingView extends View {
                     drawCanvas.drawPath(drawPath, drawPaint);
                     drawPath.reset();
                     drawing = false;
+                    limits.setActiveDotActiveState(true);
+                    if (limits.isAllEdgesActive()) {
+                        levelComplete = true;
+                        limits.setDotsActiveColor(drawCanvas, drawPaint);
+                    }
                 }
                 else if(drawing){
                     drawPath.rewind();
                     drawPath.reset();
                 }
-
-                limits.resetColor(drawCanvas,drawPaint);
+                if (levelComplete == false) {
+                    limits.resetColor(drawCanvas, drawPaint);
+                }
                 break;
             default:
                 return false;

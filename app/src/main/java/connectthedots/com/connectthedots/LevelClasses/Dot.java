@@ -28,6 +28,8 @@ public class Dot {
 
     public String label;
 
+    public boolean edgeActive;
+
     public Dot(int id, double X, double Y){
         this.x = X;
         this.y = Y;
@@ -35,6 +37,7 @@ public class Dot {
         size = R.integer.dot_size;
         color = R.color.dotColour;
         label = Integer.toString(id);
+        edgeActive = false;
     }
 
     public Dot(int id, int nextID, double X, double Y){
@@ -45,6 +48,7 @@ public class Dot {
         color = R.color.dotColour;
         label = Integer.toString(id);
         nextDotID = nextID;
+        edgeActive = false;
     }
 
     public Dot(int id, double X, double Y, int size, int color){
@@ -54,6 +58,7 @@ public class Dot {
         this.size = size;
         this.color = color;
         label = Integer.toString(id);
+        edgeActive = false;
     }
 
     public Dot(int id, int nextID, double X, double Y, int size, int color){
@@ -64,6 +69,7 @@ public class Dot {
         this.color = color;
         label = Integer.toString(id);
         nextDotID = nextID;
+        edgeActive = false;
     }
 
     //public void addConnectedDot(Dot newDot){
@@ -136,5 +142,12 @@ public class Dot {
         return new Vector2(x, y);
     }
 
+    public void setEdgeActive(boolean setEdgeActiveValue){
+        edgeActive = setEdgeActiveValue;
+    }
+
+    public boolean getEdgeActiveState(){
+        return edgeActive;
+    }
 
 }
