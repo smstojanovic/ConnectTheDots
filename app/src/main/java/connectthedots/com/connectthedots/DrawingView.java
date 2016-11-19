@@ -1,6 +1,8 @@
 package connectthedots.com.connectthedots;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,7 +39,7 @@ public class DrawingView extends View {
     // figure out which level to render
     private String levelTag;
 
-    private boolean levelComplete = false;
+    public boolean levelComplete = false;
 
     // drawing specific points
     private boolean drawing = false;
@@ -212,6 +214,7 @@ public class DrawingView extends View {
                     if (limits.isAllEdgesActive()) {
                         levelComplete = true;
                         limits.setDotsActiveColor(drawCanvas, drawPaint);
+                        getPaintActivity().completeLevel(this);
                     }
                 }
                 else if(drawing){
@@ -227,6 +230,18 @@ public class DrawingView extends View {
         }
         invalidate();
         return true;
+    }
+
+    // return the current activity. Then use this to call a floating action button that says 'level completed'
+    public PaintActivity getPaintActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof PaintActivity) {
+                return (PaintActivity) context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
     }
 
 }
