@@ -64,7 +64,7 @@ public class PaintActivity extends AppCompatActivity {
                     View layout = inflater.inflate(R.layout.popup,
                             (ViewGroup) findViewById(R.id.popup_1));
 
-                    popUpWindow = new PopupWindow(layout, 300, 370, true);
+                    popUpWindow = new PopupWindow(layout, 800, 570, true);
                     popUpWindow.setTouchable(true);
                     popUpWindow.setFocusable(false);
                     popUpWindow.setOutsideTouchable(false);
@@ -73,12 +73,14 @@ public class PaintActivity extends AppCompatActivity {
                     close.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             popUpWindow.dismiss();
+                            //finishActivity(R.layout.activity_paint);
+                            finish();
                         }
                     }
                     );
                 }
             }
-        }, 100);
+        }, 1);
 
         //sampleText.se
     }
