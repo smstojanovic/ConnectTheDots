@@ -16,18 +16,18 @@ import connectthedots.com.connectthedots.LevelClasses.Dot;
 
 
 
-public class LevelBuilder extends AsyncTask<Integer,Void,ArrayList<Dot>> {
+public class LevelBuilder extends AsyncTask<String,Void,ArrayList<Dot>> {
 
     String connectionString;
 
     public LevelBuilder(){
         connectionString = "jdbc:jtds:sqlserver://geodesic.database.windows.net:1433/SS_DEV;user=drawingSandbox@geodesic;password=P1u7on1cX;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=5;";
-        buildLevel(1);
+        buildLevel("FF660001");
     }
     // IPs allowed: 101.173.64.0 to 101.173.64.255
     @Override
-    protected ArrayList<Dot> doInBackground(Integer... params) {
-        int sub_category_id = params[0].intValue();
+    protected ArrayList<Dot> doInBackground(String... params) {
+        String application_tag_id = params[0].toString();
 
         ArrayList<Dot> dots = new ArrayList<Dot>();
 
@@ -37,7 +37,12 @@ public class LevelBuilder extends AsyncTask<Integer,Void,ArrayList<Dot>> {
             Connection conn = d.connect(connectionString, new Properties());
             System.out.println("test");
             Statement sta = conn.createStatement();
-            String Sql = "SELECT [Dot_ID],[ComponentID],[Sub_Category_ID],[Next_Dot_ID],[X_Coord],[Y_Coord],[Size_override],[label],[colour_override] FROM SS_DEV.[dbo].[dots] WHERE Sub_Category_ID = " + Integer.toString(sub_category_id) + " Order By dot_id ASC";
+            String Sql = "SELECT [Dot_ID],[ComponentID],[Sub_Category_ID],[Next_Dot_ID],[X_Coord],[Y_Coord],[Size_override],[label],[colour_override] " +
+                        "FROM SS_DEV.[dbo].[dots] " +
+                        "WHERE Sub_Category_ID = ( SELECT TOP 1 Sub_CategoryID " +
+                                                    "FROM SS_DEV.[dbo].[sub_category] " +
+                                                    "WHERE application_tag_id = '" + application_tag_id + "' ) " +
+                        "Order By dot_id ASC";
             ResultSet rs = sta.executeQuery(Sql);
 
             while (rs.next()) {
@@ -72,9 +77,9 @@ public class LevelBuilder extends AsyncTask<Integer,Void,ArrayList<Dot>> {
         //buildLevel(1);
     }
 
-    public ArrayList<Dot> buildLevel(int sub_category_id) {
+    public ArrayList<Dot> buildLevel(String application_tag_id) {
 
-        ArrayList<Dot> dots = doInBackground(sub_category_id);
+        ArrayList<Dot> dots = doInBackground(application_tag_id);
 
         return dots;
     }

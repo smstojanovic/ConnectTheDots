@@ -89,7 +89,7 @@ public class DrawingView extends View {
 
         try {
             int levelNumber = 1;
-            limits = new DrawingLimits(levelNumber);
+            limits = new DrawingLimits(levelTag);
         }
         catch(Exception e) {
             limits = new DrawingLimits();

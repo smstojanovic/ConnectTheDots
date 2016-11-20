@@ -40,7 +40,7 @@
                     android:onClick="categoryClicked"
                     android:src="@drawable/shapes_line"
                     android:scaleType="centerInside"
-                    android:tag="#FF660001">
+                    android:tag="#FF660002">
                 </ImageButton>
 
 
@@ -53,15 +53,15 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="100dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:background="#d4d4d4"
                     android:contentDescription="category"
-                    android:src="@drawable/category_bulb"
+                    android:onClick="categoryClicked"
+                    android:src="@drawable/shapes_tri"
                     android:scaleType="fitCenter"
-                    android:tag="#FF660000" />
+                    android:tag="#FF660001" />
 
 
             </LinearLayout>
@@ -79,9 +79,10 @@
                     android:layout_margin="10dp"
                     android:background="#d4d4d4"
                     android:contentDescription="category"
+                    android:onClick="categoryClicked"
                     android:src="@drawable/category_bulb"
                     android:scaleType="fitCenter"
-                    android:tag="#FF660000" />
+                    android:tag="#FF660001" />
 
 
 

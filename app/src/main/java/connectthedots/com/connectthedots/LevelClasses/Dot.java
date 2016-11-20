@@ -37,7 +37,7 @@ public class Dot {
         size = R.integer.dot_size;
         color = R.color.dotColour;
         label = Integer.toString(id);
-        edgeActive = false;
+        edgeActive = true;
     }
 
     public Dot(int id, int nextID, double X, double Y){
@@ -49,6 +49,9 @@ public class Dot {
         label = Integer.toString(id);
         nextDotID = nextID;
         edgeActive = false;
+        if (nextID == id)
+            edgeActive = true;
+
     }
 
     public Dot(int id, double X, double Y, int size, int color){
@@ -58,7 +61,8 @@ public class Dot {
         this.size = size;
         this.color = color;
         label = Integer.toString(id);
-        edgeActive = false;
+        edgeActive = true;
+
     }
 
     public Dot(int id, int nextID, double X, double Y, int size, int color){
@@ -70,6 +74,8 @@ public class Dot {
         label = Integer.toString(id);
         nextDotID = nextID;
         edgeActive = false;
+        if (nextID == id)
+            edgeActive = true;
     }
 
     //public void addConnectedDot(Dot newDot){
@@ -105,7 +111,7 @@ public class Dot {
 
     public void setColor(int color, boolean changeNextDotColor){
         this.color = color;
-        if (changeNextDotColor)
+        if (changeNextDotColor && dotID != nextDotID)
             nextDot.setColor(color);
     }
 

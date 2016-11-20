@@ -33,15 +33,15 @@ public class DrawingLimits {
         activeDotID = -1;
     }
 
-    public DrawingLimits(int levelNumber){
-        setupDots(levelNumber);
+    public DrawingLimits(String application_tag_id){
+        setupDots(application_tag_id);
         screenHeight = 2310;
         screenWidth = 1270;
         activeDotID = -1;
     }
 
-    public DrawingLimits(int levelNumber, boolean isTest){
-        setupDots(levelNumber, isTest);
+    public DrawingLimits(String application_tag_id, boolean isTest){
+        setupDots(application_tag_id, isTest);
         screenHeight = 2310;
         screenWidth = 1270;
         activeDotID = -1;
@@ -54,8 +54,8 @@ public class DrawingLimits {
         activeDotID = -1;
     }
 
-    public DrawingLimits(int levelNumber, double width, double height){
-        setupDots(levelNumber);
+    public DrawingLimits(String application_tag_id, double width, double height){
+        setupDots(application_tag_id);
         screenHeight = height;
         screenWidth = width;
         activeDotID = -1;
@@ -202,9 +202,9 @@ public class DrawingLimits {
         }
 
     }
-    private void setupDots(int subCategory_ID){
+    private void setupDots(String application_tag_id){
         try {
-            dots = new LevelBuilder().execute(subCategory_ID).get();
+            dots = new LevelBuilder().execute(application_tag_id).get();
             //dots = builder.buildLevel(subCategory_ID);
 
         }
@@ -214,14 +214,14 @@ public class DrawingLimits {
 
     }
 
-    private void setupDots(int subCategory_ID, boolean runTest){
+    private void setupDots(String application_tag_id, boolean runTest){
         try {
             if (runTest) {
                 LevelBuilder build = new LevelBuilder();
-                dots = build.buildLevel(subCategory_ID);
+                dots = build.buildLevel(application_tag_id);
             }
             else
-                setupDots(subCategory_ID);
+                setupDots(application_tag_id);
 
         }
         catch(Exception e) {
