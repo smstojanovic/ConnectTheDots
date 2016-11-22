@@ -33,7 +33,7 @@
 
                 <ImageButton
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="100dp"
                     android:layout_margin="10dp"
                     android:background="#d4d4d4"
                     android:contentDescription="category"
@@ -54,7 +54,7 @@
 
                 <ImageButton
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="100dp"
                     android:layout_margin="10dp"
                     android:background="#d4d4d4"
                     android:contentDescription="category"
@@ -80,9 +80,9 @@
                     android:background="#d4d4d4"
                     android:contentDescription="category"
                     android:onClick="categoryClicked"
-                    android:src="@drawable/category_bulb"
+                    android:src="@drawable/shapes_sq"
                     android:scaleType="fitCenter"
-                    android:tag="#FF660001" />
+                    android:tag="#FF660003" />
 
 
 
