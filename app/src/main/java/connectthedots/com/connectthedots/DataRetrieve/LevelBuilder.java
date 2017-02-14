@@ -21,7 +21,7 @@ public class LevelBuilder extends AsyncTask<String,Void,ArrayList<Dot>> {
     String connectionString;
 
     public LevelBuilder(){
-        connectionString = "jdbc:jtds:sqlserver://geodesic.database.windows.net:1433/SS_DEV;user=drawingSandbox@geodesic;password=P1u7on1cX;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=5;";
+        connectionString = "jdbc:jtds:sqlserver://********.database.windows.net:***/***;user=********;password=********;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=5;";
         buildLevel("FF660001");
     }
     // IPs allowed: 101.173.64.0 to 101.173.64.255
